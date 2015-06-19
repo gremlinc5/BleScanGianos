@@ -125,7 +125,7 @@ app.ui.displayDeviceList = function()
 				
 				$.ajax({
 					type: 'POST',
-					url: 'http://192.168.1.106:8888/',
+					url: 'http://192.168.1.65:8888/',
 					data: '{"type":"UUID","name":"'+device.name+'","address":"'+device.address+'","rssi":'+device.rssi+'}',
 					success: function (data) { console.log('data: ' + data); },
 					contentType: "application/json",
@@ -139,7 +139,7 @@ app.ui.displayDeviceList = function()
 				
 				$.ajax({
 					type: 'POST',
-					url: 'http://192.168.1.106:8888/',
+					url: 'http://192.168.1.65:8888/',
 					data: '{"type":"UID","name":"none","address":"none","rssi":0}',
 					success: function (data) { console.log('data: ' + data); },
 					contentType: "application/json",
