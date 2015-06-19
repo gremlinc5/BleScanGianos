@@ -114,19 +114,38 @@ app.ui.displayDeviceList = function()
 			else if (device.rssi < 0) { rssiWidth = 100 + device.rssi; }
 
 			// Create tag for device data.
-			var element = $(
-				'<li>'
-				+	'<strong>' + device.name + '</strong><br />'
-				// Do not show address on iOS since it can be confused
-				// with an iBeacon UUID.
-				+	(evothings.os.isIOS() ? '' : device.address + '<br />')
-				+	device.rssi + '<br />'
-				+ 	'<div style="background:rgb(225,0,0);height:20px;width:'
-				+ 		rssiWidth + '%;"></div>'
-				+ '</li>'
-			);
+			// Do not show address on iOS since it can be confused
+			// with an iBeacon UUID.
+			//var element = $(	'<li>'+'<strong>' + device.name + '</strong><br />'+(evothings.os.isIOS() ? '' : device.address + '<br />')+device.rssi + '<br />'+'<div style="background:rgb(225,0,0);height:20px;width:'+rssiWidth + '%;"></div>'+'</li>');
 
-			$('#found-devices').append(element);
+			//$('#found-devices').append(element);
+			checkConnection();
+		
+			if (networkStatus === 1) {
+				
+				$.ajax({
+					type: 'POST',
+					url: 'http://192.168.1.106:8888/',
+					data: '{"type":"UUID","name":"'+device.name+'","address":"'+device.address+'","rssi":'+device.rssi+'}',
+					success: function (data) { console.log('data: ' + data); },
+					contentType: "application/json",
+					dataType: 'json'
+				});
+			}
+		}
+		else
+		{
+			if (networkStatus === 1) {
+				
+				$.ajax({
+					type: 'POST',
+					url: 'http://192.168.1.106:8888/',
+					data: '{"type":"UID","name":"none","address":"none","rssi":0}',
+					success: function (data) { console.log('data: ' + data); },
+					contentType: "application/json",
+					dataType: 'json'
+				});
+			}
 		}
 	});
 };
@@ -138,3 +157,24 @@ app.ui.displayStatus = function(message)
 };
 
 app.initialize();
+
+var networkStatus = 0;
+
+// Check Network Status before sending data!!!
+// For Internet usage enable 2G, 3G and 4G from 0 to 1
+// This example use only WiFi connection
+function checkConnection() {
+	var networkState = navigator.connection.type;
+
+	var states = {};
+	states[Connection.UNKNOWN]  = 0;
+	states[Connection.ETHERNET] = 1;
+	states[Connection.WIFI]     = 1;
+	states[Connection.CELL_2G]  = 0;
+	states[Connection.CELL_3G]  = 0;
+	states[Connection.CELL_4G]  = 0;
+	states[Connection.CELL]     = 0;
+	states[Connection.NONE]     = 0;
+
+	networkStatus = states[networkState];
+}
