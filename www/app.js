@@ -140,7 +140,7 @@ app.ui.displayDeviceList = function()
 				$.ajax({
 					type: 'POST',
 					url: 'http://192.168.1.65:8888/',
-					data: '{"type":"UID","name":"none","address":"none","rssi":0}',
+					data: '{"type":"UUID","name":"none","address":"none","rssi":0}',
 					success: function (data) { console.log('data: ' + data); },
 					contentType: "application/json",
 					dataType: 'json'
