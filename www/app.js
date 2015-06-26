@@ -116,9 +116,9 @@ app.ui.displayDeviceList = function()
 			// Create tag for device data.
 			// Do not show address on iOS since it can be confused
 			// with an iBeacon UUID.
-			//var element = $(	'<li>'+'<strong>' + device.name + '</strong><br />'+(evothings.os.isIOS() ? '' : device.address + '<br />')+device.rssi + '<br />'+'<div style="background:rgb(225,0,0);height:20px;width:'+rssiWidth + '%;"></div>'+'</li>');
+			var element = $(	'<li>'+'<strong>' + device.name + '</strong><br />'+(evothings.os.isIOS() ? '' : device.address + '<br />')+device.rssi + '<br />'+'<div style="background:rgb(225,0,0);height:20px;width:'+rssiWidth + '%;"></div>'+'</li>');
 
-			//$('#found-devices').append(element);
+			$('#found-devices').append(element);
 			checkConnection();
 		
 			if (networkStatus === 1) {
